@@ -18,8 +18,9 @@ When it comes to design, he believes in simplicity. He is also a big proponent o
 Off work, he is part runner, part climber and part geek. Running helps him think and keep his focus while exploring nature helps him stay in-touch with the mother earth and detox from the busy city life. The geek part of him helps him stay creative and up-to-date with all the amazing new breakthroughs in technology.
 
 
-![Smithsonian Image]({{ site.url }}/about/ArmanKeyoumarsi.png.png)
+![Smithsonian Image]({{ site.url }}/about/ArmanKeyoumarsi.png)
 {: .image-Center}
+
       
 [Download my CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
 <a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a>
