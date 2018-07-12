@@ -14,3 +14,4 @@ comments: false
       
 [Download my CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
 <a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a>
+<!-- Comment>>
