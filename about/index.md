@@ -13,6 +13,4 @@ comments: false
 
       
 [Download my CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
-[Add me to your contacts]({{ http://ct.kaywa.me/ }}/gOA21){: .btn} 
-
-<div markdown="0"><a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a></div>
+<a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a>
