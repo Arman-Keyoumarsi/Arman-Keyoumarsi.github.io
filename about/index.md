@@ -20,7 +20,7 @@ Off work, he is part runner, part climber and part geek. Running helps him think
 
 ![Smithsonian Image]({{ site.url }}/about/ArmanKeyoumarsi.png)
 {: .image-Center}
-
+<center>Scan the QR code for his contact details</center>
       
-[Download my CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
-<a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a>
+[Download his CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
+<a href="http://ct.kaywa.me/gOA21" class="btn">Add him to your contacts</a>
