@@ -13,6 +13,4 @@ comments: false
 
       
 [Download my CV]({{ site.url }}/assets/download/AK-CV.pdf){: .btn} 
-[Add me to your contacts]({http://ct.kaywa.me/gOA21}){: .btn}
-
-<img src="http://qr.kaywa.com/?l=1&s=4&d=http%3A%2F%2Fct.kaywa.me%2FgOA21" alt="QRCode"/>
+<div markdown="0"><a href="http://ct.kaywa.me/gOA21" class="btn">Add me to your contacts</a></div>
