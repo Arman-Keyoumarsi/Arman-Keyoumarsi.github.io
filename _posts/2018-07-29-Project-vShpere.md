@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "vSphere Automation Scripts"
-date:   2016-04-06
+date:   2018-07-29
 excerpt: "vSphere project contains all the related scripts and codes use to automate various vSphere tasks."
 project: true
 tag:
