@@ -16,8 +16,6 @@ comments: true
 
 This project contains all the related scripts and codes use to automate various vSphere tasks.
 
-### *(If you like these scripts or using them, please give a :star: for motivation.)*
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Each script/code will live within its folder, see README for each script on how to deploy/Use them on a live system.
@@ -25,9 +23,9 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 You need the latest PowerCLI module installed on your system to be able to run these scripts.
-```Powershell
+{% highlight Powershell %}
 Install-Module -Name VMware.PowerCLI
-```
+{% highlight %}
 For more details refer to [VMware PowerCLI Blog](https://blogs.vmware.com/PowerCLI/2017/04/powercli-install-process-powershell-gallery.html)
 
 ### Installing
