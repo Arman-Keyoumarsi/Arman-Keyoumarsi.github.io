@@ -6,8 +6,6 @@ excerpt: "Distributed Traffic Matrix Measurement in OpenFlow Enabled Networks, u
 project: true
 tag:
 - Network 
-- OpenFlow
-- SDN
 comments: true
 ---
 

@@ -6,9 +6,6 @@ excerpt: "vSphere project contains all the related scripts and codes use to auto
 project: true
 tag:
 - vSphere 
-- Powershell
-- PowerCLI
-- Script
 comments: true
 ---
 
