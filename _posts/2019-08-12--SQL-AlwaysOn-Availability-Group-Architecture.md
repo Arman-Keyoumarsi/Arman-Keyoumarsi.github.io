@@ -2,7 +2,7 @@
 layout: post
 title:  "SQL Server AlwaysOn Availability Group Architecture"
 date:   2018-08-12
-excerpt: "Design and component of SQL Server AlwaysOn Availability"
+excerpt: "Design and component of SQL Server AlwaysOn Availability Group"
 tag:
 - SQL
 comments: true
