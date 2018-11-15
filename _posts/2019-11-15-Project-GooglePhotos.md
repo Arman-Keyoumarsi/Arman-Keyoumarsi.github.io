@@ -15,7 +15,7 @@ This album contains collection of my favorite photos that I have taken throughou
 
 ## Photo Samples
 
-Below you can find a sample of photos. For the full album click on the photo or the link provided below. 
+Below you can find a sample of photos. For the full album click on any of the photos below or the link provided at the bottom of the page. 
 
 <a href='https://photos.google.com/share/AF1QipPLwk2EZzBGL3Rjaep5phUnyf6QmrPdeJ2NgDShKQ957YiLwVOelomMhIHOEoOi4Q?key=WUVWREdZV3lmNXNETm9jZGRjcEdMU3Q3UF85Q0N3&source=ctrlq.org'><img src='https://lh3.googleusercontent.com/DKrjTexbXm5ZVDwAzSav6XM-vluiasAM4rNfy84g-Amyxp1WGb_oDts6g35N9xdOzWBHqITh6H1JAPWnazqmI92dkCq1trnijSevW441awdcKPcGxVOc2eiR0pLZWEZk9H-i2QT83Wc=w2400' /></a>
 
