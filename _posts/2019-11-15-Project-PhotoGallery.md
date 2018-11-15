@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Photos"
+title:  "Photo Gallery"
 date:   2018-11-15
 excerpt: "Collection of my favorites photos that I have taken throughout the years!"
 project: true
