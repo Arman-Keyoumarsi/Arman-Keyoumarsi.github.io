@@ -10,11 +10,7 @@ tag:
 comments: true
 ---
 
-# Photo Gallery 
-
 This album contains collection of my favorite photos that I have taken throughout the years!
-
-## Photo Samples
 
 Below you can find a sample of photos. For the full album click on any of the photos below or on the link provided at the bottom of the page. 
 
