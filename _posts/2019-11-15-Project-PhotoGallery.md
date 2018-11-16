@@ -4,7 +4,7 @@ title:  "Photo Gallery"
 date:   2018-11-15
 excerpt: "Collection of my favorites photos that I have taken throughout the years!"
 project: true
-feature: "\assets\BlogsIMGs\2019-11-15-Project-PhotoGallery\3h.jpg"
+feature: \assets\BlogsIMGs\2019-11-15-Project-PhotoGallery\3h.jpg
 tag:
 - Personal 
 comments: true
