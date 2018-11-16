@@ -12,7 +12,7 @@ comments: true
 
 This album contains collection of my favorite photos that I have taken throughout the years!
 
-Below you can find a sample of photos. For the full album click on any of the photos below or on the link provided at the bottom of the page. 
+Below you can find a sample of the photos, for the full album click on any of the photos below or on the link provided at the bottom of the page. 
 
 <figure>
 	<a href="https://photos.app.goo.gl/Woxi6NiTtdRyaSbK9"><img src="\assets\BlogsIMGs\2019-11-15-Project-PhotoGallery\3h.png"></a>
