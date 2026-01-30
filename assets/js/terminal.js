@@ -412,24 +412,10 @@ Type 'email' to send me a message directly.
   }
 
   function showWelcome() {
-    const welcome = `<pre class="ascii-art">${getColorfulLogo()}</pre>
-<div class="welcome-box">
-<div class="welcome-title">Welcome to Arman Keyoumarsi's Portfolio</div>
-<div class="welcome-url">arman.keyoumarsi.com</div>
-<div class="quick-links">
-<div class="links-title">Quick Links:</div>
-<div class="links-grid">
-<div class="link-item"><span class="link-num">[1]</span> <a href="#" onclick="runCmd('about');return false;">About</a></div>
-<div class="link-item"><span class="link-num">[2]</span> <a href="#" onclick="runCmd('resume');return false;">Resume</a></div>
-<div class="link-item"><span class="link-num">[3]</span> <a href="#" onclick="runCmd('linkedin');return false;">LinkedIn</a></div>
-<div class="link-item"><span class="link-num">[4]</span> <a href="#" onclick="runCmd('github');return false;">GitHub</a></div>
-<div class="link-item"><span class="link-num">[5]</span> <a href="#" onclick="runCmd('contact');return false;">Contact</a></div>
-<div class="link-item"><span class="link-num">[6]</span> <a href="#" onclick="runCmd('photos');return false;">Photos</a></div>
-<div class="link-item"><span class="link-num">[7]</span> <a href="#" onclick="runCmd('strava');return false;">Strava</a></div>
-</div>
-</div>
-<div class="help-hint">Type 'help' for all commands</div>
-</div>`;
+    const welcome = `<pre class="ascii-art">${getColorfulLogo()}</pre><div class="welcome-box"><div class="welcome-title">Welcome to Arman Keyoumarsi's Hub</div>
+<div class="welcome-bio">Enterprise Architect with 20+ years designing and managing systems for top-tier organizations. Skilled in hybrid cloud design, architecture, and project management. Certified in TOGAF, AI, DevOps, and cloud architecture (Azure, AWS, GCP). Passionate about delivering innovative, client-focused solutions. When I'm not building IT systems, I'm exploring trails, enjoying the outdoors, and always up for a good conversation over some craft beer.</div>
+<div class="quick-links"><div class="links-title">Quick Links:</div><div class="links-grid"><div class="link-item"><span class="link-num">[1]</span> <a href="#" onclick="runCmd('about');return false;">About</a></div><div class="link-item"><span class="link-num">[2]</span> <a href="#" onclick="runCmd('resume');return false;">Resume</a></div><div class="link-item"><span class="link-num">[3]</span> <a href="#" onclick="runCmd('linkedin');return false;">LinkedIn</a></div><div class="link-item"><span class="link-num">[4]</span> <a href="#" onclick="runCmd('github');return false;">GitHub</a></div><div class="link-item"><span class="link-num">[5]</span> <a href="#" onclick="runCmd('contact');return false;">Contact</a></div><div class="link-item"><span class="link-num">[6]</span> <a href="#" onclick="runCmd('photos');return false;">Photos</a></div><div class="link-item"><span class="link-num">[7]</span> <a href="#" onclick="runCmd('strava');return false;">Strava</a></div></div></div>
+<div class="help-hint">Type 'help' for all commands</div></div>`;
 
     printOutput(welcome);
   }

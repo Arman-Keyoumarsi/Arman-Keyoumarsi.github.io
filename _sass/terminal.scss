@@ -136,23 +136,31 @@ html, body {
 
   .welcome-title {
     color: $terminal-text;
+    margin: 0 0 2px 0;
+    padding: 0;
   }
 
-  .welcome-url {
+  .welcome-bio {
     color: $terminal-text-dim;
-    margin-bottom: 8px;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
   }
 
   .quick-links {
+    margin: 4px 0 0 0;
+    padding: 0;
+
     .links-title {
       color: $terminal-text;
-      margin-bottom: 5px;
+      margin: 0 0 2px 0;
+      padding: 0;
     }
 
     .links-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 2px 20px;
+      gap: 0 20px;
     }
 
     .link-item {
@@ -176,7 +184,8 @@ html, body {
   }
 
   .help-hint {
-    margin-top: 8px;
+    margin: 4px 0 0 0;
+    padding: 0;
     color: $terminal-text-dim;
     font-size: 0.9em;
   }
