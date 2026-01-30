@@ -1,0 +1,12 @@
+services:
+  jekyll:
+    image: bretfisher/jekyll-serve
+    platform: linux/amd64
+    container_name: portfolio-terminal
+    ports:
+      - "4000:4000"
+      - "35729:35729"
+    volumes:
+      - .:/site
+    environment:
+      - JEKYLL_ENV=development

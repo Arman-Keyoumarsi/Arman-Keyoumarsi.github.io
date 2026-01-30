@@ -1,0 +1,12 @@
+# Local configuration overrides
+# Copy this to _config_local.yml and fill in your EmailJS credentials
+# _config_local.yml is gitignored and won't be committed
+
+# EmailJS Configuration (optional - falls back to mailto if not set)
+# Sign up at https://www.emailjs.com/ (free tier: 200 emails/month)
+emailjs_service_id: "your_service_id"
+emailjs_template_id: "your_template_id"
+emailjs_public_key: "your_public_key"
+
+# Local development URL override
+url: "http://localhost:4000"

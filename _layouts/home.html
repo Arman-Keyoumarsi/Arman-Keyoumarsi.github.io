@@ -2,49 +2,85 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<html lang="en">
 <head>
-    {% include head.html %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ site.title }} - Terminal</title>
+    <meta name="description" content="{{ site.description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ site.title }}">
+    <meta property="og:description" content="{{ site.description }}">
+    <meta property="og:url" content="{{ site.url }}">
+    <meta property="og:image" content="{{ site.url }}/{{ site.logo }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ site.title }}">
+    <meta name="twitter:image" content="{{ site.url }}/{{ site.logo }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ site.url }}/favicon.ico">
+    <link rel="apple-touch-icon" href="{{ site.url }}/assets/img/favicons/apple-icon-precomposed.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ site.url }}/assets/css/main.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    {% include nav.html %}
-    <!-- Header -->
-    <header class="header flex" role="banner">
-        <div class="container animated fadeIn">
-            <div class="row">
-                    <a href="{{ site.url }}">
-                        <img src="{{ site.logo }}" class="img-circle zoombtn animated rotateIn">
-                    </a>
-                    <h3 class="title">
-                        <a class="zoombtn" href="{{ site.url }}">
-                        	<p style="font-size:1.2rem;font-weight:300">{{ site.title }}</p>
-			            </a>
-                    </h3>
-                    <hr class="hr-line">
-                    <h3 class="title">
-                        <a href="{{ site.url }}">
-                        	<p style="font-size:1rem;font-weight:300">{{ site.bio }}</p>
-			            </a>
-                    </h3>
-                    {% include social-links.html %}
-                  <hr class="hr-line">
-                  <h3 class="title">
-                         <a class="btn zoombtn" href="{{ site.url }}/about">
-                         About
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/posts">
-                         Blog
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/projects">
-                         Projects
-                         </a>
-                 </h3>
+    <div class="terminal-fullscreen" id="terminal">
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+            <span class="terminal-title">arman@keyoumarsi: ~</span>
+            <div class="terminal-controls">
+                <span>-</span>
+                <span>□</span>
+                <span>×</span>
             </div>
         </div>
-    </header>
-    {% include scripts.html %}
+
+        <!-- Terminal Body -->
+        <div class="terminal-body" id="terminal-body">
+            <div class="terminal-output" id="terminal-output"></div>
+            <div class="terminal-input-line">
+                <span class="prompt">arman@keyoumarsi:~$ </span>
+                <input type="text"
+                       class="terminal-input"
+                       id="terminal-input"
+                       autofocus
+                       autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       spellcheck="false"
+                       aria-label="Terminal input">
+                <span class="cursor" id="cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Data -->
+    <script>
+        window.terminalData = {
+            baseUrl: "{{ site.url }}",
+            links: {
+                about: "{{ site.url }}/about",
+                resume: "{{ site.url }}/assets/download/AK-CV.pdf",
+                linkedin: "https://linkedin.com/in/arman-keyoumarsi",
+                github: "https://github.com/arman-keyoumarsi",
+                photos: "https://photos.app.goo.gl/Woxi6NiTtdRyaSbK9",
+                strava: "https://www.strava.com/athletes/16032806",
+                email: "Arman@Keyoumarsi.com",
+                twitter: "https://twitter.com/Akeyoumarsi",
+                instagram: "https://instagram.com/armankeyoumarsi"
+            }
+        };
+    </script>
+    <script src="{{ site.url }}/assets/js/terminal.js"></script>
 </body>
 </html>
