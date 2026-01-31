@@ -278,10 +278,203 @@
 </div>`;
   }
 
+  // About bio paragraphs for typewriter effect
+  const aboutParagraphs = [
+    { text: "Arman Keyoumarsi is an Enterprise Architect and AI Consultant with over twenty years of experience transforming technology organizations across three continents.", highlight: "Arman Keyoumarsi" },
+    { text: "He holds a Master's degree in Telecommunication Engineering and multiple industry certifications, including TOGAF." },
+    { text: "Throughout his career, Arman has championed automation as the foundation of operational excellence. He's modernized legacy systems, delivered global applications, and eliminated inefficiencies that held organizations back. The result? Millions saved annually, faster time-to-market, and technology investments that actually align with business goals." },
+    { text: "Leading multinational projects across diverse teams and cultures, he's built a reputation for turning complexity into clarity—and ideas into real business value. Colleagues know him for his persistence, his teamwork, and his ability to bridge the gap between what's technically possible and what the business actually needs." },
+    { text: "Today, Arman helps companies scale smarter and build for the future. His philosophy is simple: design for clarity, build for scale, and deliver measurable impact—without unnecessary complexity." },
+    { text: "\"Every element is a crack waiting for scale to find it. Wisdom builds foundations that hold; impatience stacks floors that fall.\"", isQuote: true },
+    { text: "Outside of work, he's part runner, part outdoor enthusiast, and always a technology geek. You'll find him chasing trails, going off-grid to reconnect with nature, or diving deep into the latest tech breakthroughs. Curious by default. Happiest when solving real problems—whether that's optimizing a system or finding the best route up a mountain." }
+  ];
+
+  // Narrator state
+  let narratorState = {
+    isTyping: false,
+    isPaused: false,
+    isSpeaking: false,
+    currentParagraph: 0,
+    currentChar: 0,
+    typingSpeed: 20,
+    audio: null
+  };
+
   function cmdAbout() {
-    window.open(data.links.about, '_self');
-    return `<span class="dim">Opening about page...</span>`;
+    // Create about section with paper document
+    const aboutHtml = `
+<div class="about-section" id="about-section">
+<div class="about-header">
+<span>Loading document...</span>
+<div class="narrator-controls">
+<button id="narrator-toggle" onclick="toggleNarrator()">▶ Start Narration</button>
+<button id="narrator-skip" onclick="skipNarration()">⏭ Skip</button>
+</div>
+</div>
+<div class="paper-document" id="paper-document">
+<div class="paper-title">About Arman Keyoumarsi</div>
+<div class="bio-content" id="bio-content"></div>
+</div>
+</div>`;
+
+    // Reset narrator state
+    narratorState = {
+      isTyping: false,
+      isPaused: false,
+      isSpeaking: false,
+      currentParagraph: 0,
+      currentChar: 0,
+      typingSpeed: 20,
+      audio: new Audio(data.baseUrl + '/assets/download/About_Me.mp3')
+    };
+
+    // Setup audio end handler
+    narratorState.audio.onended = function() {
+      narratorState.isSpeaking = false;
+      updateNarratorButton();
+    };
+
+    // Start typewriter after a brief delay
+    setTimeout(() => {
+      startTypewriter();
+    }, 100);
+
+    return aboutHtml;
   }
+
+  function startTypewriter() {
+    narratorState.isTyping = true;
+    narratorState.isPaused = false;
+    typeNextCharacter();
+  }
+
+  function typeNextCharacter() {
+    if (!narratorState.isTyping || narratorState.isPaused) return;
+
+    const bioContent = document.getElementById('bio-content');
+    if (!bioContent) return;
+
+    const para = aboutParagraphs[narratorState.currentParagraph];
+    if (!para) {
+      // Done typing
+      narratorState.isTyping = false;
+      updateNarratorButton();
+      return;
+    }
+
+    // Create paragraph element if needed
+    let paraEl = document.getElementById(`bio-para-${narratorState.currentParagraph}`);
+    if (!paraEl) {
+      paraEl = document.createElement(para.isQuote ? 'div' : 'p');
+      paraEl.id = `bio-para-${narratorState.currentParagraph}`;
+      if (para.isQuote) {
+        paraEl.className = 'paper-quote';
+      }
+      bioContent.appendChild(paraEl);
+    }
+
+    if (narratorState.currentChar < para.text.length) {
+      // Type next character
+      let displayText = para.text.substring(0, narratorState.currentChar + 1);
+
+      // Highlight name if needed
+      if (para.highlight) {
+        displayText = displayText.replace(para.highlight, `<strong>${para.highlight}</strong>`);
+      }
+
+      paraEl.innerHTML = displayText + '<span class="typing-cursor">&nbsp;</span>';
+      narratorState.currentChar++;
+
+      scrollToBottom();
+      setTimeout(typeNextCharacter, narratorState.typingSpeed);
+    } else {
+      // Finished this paragraph, move to next
+      paraEl.innerHTML = para.highlight
+        ? para.text.replace(para.highlight, `<strong>${para.highlight}</strong>`)
+        : para.text;
+
+      narratorState.currentParagraph++;
+      narratorState.currentChar = 0;
+
+      // Check if done, add download link
+      if (narratorState.currentParagraph >= aboutParagraphs.length) {
+        addPaperFooter();
+      }
+
+      // Brief pause between paragraphs
+      setTimeout(typeNextCharacter, 300);
+    }
+  }
+
+  function toggleNarrator() {
+    const btn = document.getElementById('narrator-toggle');
+    if (!btn || !narratorState.audio) return;
+
+    if (!narratorState.isSpeaking) {
+      // Start/resume narration
+      narratorState.isSpeaking = true;
+      narratorState.audio.play();
+      btn.textContent = '⏸ Pause';
+      btn.classList.add('active');
+    } else {
+      // Pause narration
+      narratorState.isSpeaking = false;
+      narratorState.audio.pause();
+      btn.textContent = '▶ Resume';
+      btn.classList.remove('active');
+    }
+  }
+
+  function skipNarration() {
+    // Stop audio
+    if (narratorState.audio) {
+      narratorState.audio.pause();
+      narratorState.audio.currentTime = 0;
+    }
+    narratorState.isSpeaking = false;
+    narratorState.isTyping = false;
+
+    // Show all content immediately
+    const bioContent = document.getElementById('bio-content');
+    if (bioContent) {
+      bioContent.innerHTML = aboutParagraphs.map((para, i) => {
+        let text = para.text;
+        if (para.highlight) {
+          text = text.replace(para.highlight, `<strong>${para.highlight}</strong>`);
+        }
+        return para.isQuote
+          ? `<div class="paper-quote">${text}</div>`
+          : `<p>${text}</p>`;
+      }).join('');
+    }
+
+    addPaperFooter();
+    updateNarratorButton();
+    scrollToBottom();
+  }
+
+  function addPaperFooter() {
+    const paperDoc = document.getElementById('paper-document');
+    if (!paperDoc || document.getElementById('paper-footer')) return;
+
+    const footer = document.createElement('div');
+    footer.id = 'paper-footer';
+    footer.className = 'paper-footer';
+    footer.innerHTML = `<a href="${data.links.resume}" target="_blank" class="download-link">⬇ DOWNLOAD CV (PDF)</a>`;
+    paperDoc.appendChild(footer);
+  }
+
+  function updateNarratorButton() {
+    const btn = document.getElementById('narrator-toggle');
+    if (btn) {
+      btn.textContent = '▶ Start Narration';
+      btn.classList.remove('active');
+    }
+  }
+
+  // Make functions globally accessible
+  window.toggleNarrator = toggleNarrator;
+  window.skipNarration = skipNarration;
 
   function cmdResume() {
     window.open(data.links.resume, '_blank');

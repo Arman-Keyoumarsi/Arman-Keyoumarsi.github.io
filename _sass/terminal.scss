@@ -129,8 +129,8 @@ html, body {
   border-left: 3px solid #444;
   padding: 10px 15px;
   margin: 10px 0;
-  width: 100%;
-  max-width: calc(100% - 4px);
+  width: fit-content;
+  max-width: 800px;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.02);
 
@@ -145,6 +145,30 @@ html, body {
     line-height: 1.4;
     margin: 0;
     padding: 0;
+  }
+
+  .bio-content {
+    color: $terminal-text-dim;
+    line-height: 1.6;
+
+    p {
+      margin: 0 0 12px 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      color: $terminal-text;
+    }
+
+    .bio-quote {
+      border-left: 2px solid #4dccb3;
+      padding-left: 15px;
+      margin: 15px 0;
+      font-style: italic;
+      color: #4dccb3;
+    }
   }
 
   .quick-links {
@@ -327,6 +351,178 @@ a {
   }
 }
 
+// About section with typewriter paper effect
+.about-section {
+  margin: 10px 0 20px 0;
+
+  .about-header {
+    color: #ffff00;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .narrator-controls {
+    display: flex;
+    gap: 10px;
+
+    button {
+      background: transparent;
+      border: 1px solid #444;
+      color: $terminal-text;
+      padding: 4px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(0, 255, 0, 0.1);
+        border-color: $terminal-text;
+      }
+
+      &.active {
+        background: rgba(0, 255, 0, 0.2);
+        border-color: $terminal-text;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Paper/document styling for about bio
+.paper-document {
+  background: #f5f5dc;
+  color: #1a1a1a;
+  padding: 30px 40px;
+  margin: 15px 0;
+  max-width: 700px;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.12),
+    0 2px 2px rgba(0,0,0,0.12),
+    0 4px 4px rgba(0,0,0,0.12),
+    0 8px 8px rgba(0,0,0,0.12);
+  position: relative;
+
+  // Paper edge effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d4a574 0%, #c9a066 50%, #d4a574 100%);
+  }
+
+  // Subtle paper texture
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(0,0,0,0.03) 27px,
+      rgba(0,0,0,0.03) 28px
+    );
+
+  .paper-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #2a2a2a;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0 0 14px 0;
+    text-indent: 0;
+    text-align: left;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  strong {
+    color: #000;
+    font-weight: bold;
+  }
+
+  .paper-quote {
+    margin: 20px 30px;
+    padding: 15px 20px;
+    border-left: 3px solid #8b7355;
+    background: rgba(139, 115, 85, 0.1);
+    font-style: italic;
+    color: #4a4a4a;
+    text-indent: 0;
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background: #1a1a1a;
+    animation: blink 0.5s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 1px;
+  }
+
+  .paper-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #aaa;
+    text-align: center;
+
+    .download-link {
+      display: inline-block;
+      color: #1a1a1a;
+      text-decoration: none;
+      padding: 8px 20px;
+      border: 2px solid #1a1a1a;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #1a1a1a;
+        color: #f5f5dc;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .paper-document {
+    padding: 20px 25px;
+    font-size: 13px;
+    margin: 10px 0;
+
+    .paper-title {
+      font-size: 16px;
+    }
+
+    p {
+      text-indent: 20px;
+    }
+
+    .paper-quote {
+      margin: 15px 10px;
+      padding: 10px 15px;
+    }
+  }
+}
+
 // Loading animation
 .loading::after {
   content: '';
@@ -360,6 +556,8 @@ a {
 
   .welcome-box {
     padding: 12px 15px;
+    max-width: 100%;
+    width: auto;
   }
 
   .help-grid {
@@ -386,6 +584,15 @@ a {
 
   .prompt {
     font-size: 12px;
+  }
+
+  .welcome-box {
+    padding: 10px 12px;
+
+    .quick-links .links-grid {
+      flex-direction: column;
+      gap: 4px;
+    }
   }
 
   .help-grid {
