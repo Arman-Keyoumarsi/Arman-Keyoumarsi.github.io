@@ -306,14 +306,14 @@
 <div class="about-section" id="about-section">
 <div class="about-header">
 <span>Loading document...</span>
-<div class="narrator-controls">
-<button id="narrator-toggle" onclick="toggleNarrator()">▶ Start Narration</button>
-<button id="narrator-skip" onclick="skipNarration()">⏭ Skip</button>
-</div>
 </div>
 <div class="paper-document" id="paper-document">
 <div class="paper-title">About Arman Keyoumarsi</div>
 <div class="bio-content" id="bio-content"></div>
+</div>
+<div class="narrator-controls" id="narrator-controls">
+<button id="narrator-toggle" onclick="toggleNarrator()">▶ Start Narration</button>
+<button id="narrator-skip" onclick="skipNarration()">⏭ Skip</button>
 </div>
 </div>`;
 
