@@ -33,11 +33,30 @@
   // Terminal State
   const state = {
     history: [],
-    historyIndex: -1
+    historyIndex: -1,
+    suggestionIndex: -1,
+    showingSuggestions: false
   };
 
   // DOM Elements
-  let terminalOutput, terminalInput, terminalBody, cursor;
+  let terminalOutput, terminalInput, terminalBody, cursor, suggestionsDropdown;
+
+  // Command definitions with descriptions
+  const commandList = [
+    { cmd: 'help', desc: 'Show available commands', icon: '📋' },
+    { cmd: 'about', desc: 'Learn about me', icon: '👤' },
+    { cmd: 'resume', desc: 'Download my CV', icon: '📄' },
+    { cmd: 'skills', desc: 'View technical skills', icon: '🛠' },
+    { cmd: 'linkedin', desc: 'Open LinkedIn profile', icon: '🔗' },
+    { cmd: 'github', desc: 'Open GitHub profile', icon: '💻' },
+    { cmd: 'contact', desc: 'Contact information', icon: '📧' },
+    { cmd: 'email', desc: 'Send me an email', icon: '✉️' },
+    { cmd: 'photos', desc: 'View photo album', icon: '📷' },
+    { cmd: 'strava', desc: 'Open Strava profile', icon: '🏃' },
+    { cmd: 'clear', desc: 'Clear terminal', icon: '🧹' },
+    { cmd: 'whoami', desc: 'Who am I?', icon: '❓' },
+    { cmd: 'neofetch', desc: 'System info', icon: '🖥' }
+  ];
 
   // Site Data
   const data = window.terminalData || { links: {} };
@@ -62,10 +81,13 @@
 
     if (!terminalInput || !terminalOutput) return;
 
+    // Create suggestions dropdown
+    createSuggestionsDropdown();
+
     // Event Listeners
     terminalInput.addEventListener('keydown', handleKeyDown);
     terminalInput.addEventListener('input', handleInput);
-    terminalBody.addEventListener('click', focusInput);
+    terminalBody.addEventListener('click', handleBodyClick);
 
     // Load history
     loadHistory();
@@ -78,6 +100,28 @@
 
     // Focus input
     setTimeout(focusInput, 100);
+  }
+
+  // Create suggestions dropdown element
+  function createSuggestionsDropdown() {
+    suggestionsDropdown = document.createElement('div');
+    suggestionsDropdown.id = 'suggestions-dropdown';
+    suggestionsDropdown.className = 'suggestions-dropdown';
+    suggestionsDropdown.style.display = 'none';
+
+    const inputLine = document.querySelector('.terminal-input-line');
+    if (inputLine) {
+      inputLine.style.position = 'relative';
+      inputLine.appendChild(suggestionsDropdown);
+    }
+  }
+
+  // Handle body click - close suggestions if clicking outside
+  function handleBodyClick(e) {
+    if (!suggestionsDropdown.contains(e.target) && e.target !== terminalInput) {
+      hideSuggestions();
+    }
+    focusInput();
   }
 
   // Focus the input field
@@ -100,15 +144,141 @@
 
     // Show/hide cursor
     cursor.style.display = terminalInput.value ? 'none' : 'inline-block';
+
+    // Update suggestions based on input
+    updateSuggestions();
+  }
+
+  // Show suggestions dropdown
+  function showSuggestions(filter = '') {
+    const filtered = filter
+      ? commandList.filter(c => c.cmd.toLowerCase().startsWith(filter.toLowerCase()))
+      : commandList;
+
+    if (filtered.length === 0) {
+      hideSuggestions();
+      return;
+    }
+
+    state.showingSuggestions = true;
+    state.suggestionIndex = 0;
+
+    suggestionsDropdown.innerHTML = filtered.map((item, index) => `
+      <div class="suggestion-item ${index === 0 ? 'selected' : ''}" data-cmd="${item.cmd}" data-index="${index}">
+        <span class="suggestion-icon">${item.icon}</span>
+        <span class="suggestion-cmd">${item.cmd}</span>
+        <span class="suggestion-desc">${item.desc}</span>
+      </div>
+    `).join('');
+
+    // Add click handlers
+    suggestionsDropdown.querySelectorAll('.suggestion-item').forEach(item => {
+      item.addEventListener('click', () => {
+        selectSuggestion(item.dataset.cmd);
+      });
+      item.addEventListener('mouseenter', () => {
+        updateSuggestionSelection(parseInt(item.dataset.index));
+      });
+    });
+
+    suggestionsDropdown.style.display = 'block';
+  }
+
+  // Hide suggestions dropdown
+  function hideSuggestions() {
+    state.showingSuggestions = false;
+    state.suggestionIndex = -1;
+    if (suggestionsDropdown) {
+      suggestionsDropdown.style.display = 'none';
+    }
+  }
+
+  // Update suggestions based on current input
+  function updateSuggestions() {
+    const input = terminalInput.value.trim().toLowerCase();
+    if (input.length > 0) {
+      showSuggestions(input);
+    } else {
+      hideSuggestions();
+    }
+  }
+
+  // Navigate suggestions with arrow keys
+  function navigateSuggestions(direction) {
+    const items = suggestionsDropdown.querySelectorAll('.suggestion-item');
+    if (items.length === 0) return;
+
+    state.suggestionIndex += direction;
+    if (state.suggestionIndex < 0) state.suggestionIndex = items.length - 1;
+    if (state.suggestionIndex >= items.length) state.suggestionIndex = 0;
+
+    updateSuggestionSelection(state.suggestionIndex);
+  }
+
+  // Update visual selection
+  function updateSuggestionSelection(index) {
+    const items = suggestionsDropdown.querySelectorAll('.suggestion-item');
+    items.forEach((item, i) => {
+      item.classList.toggle('selected', i === index);
+    });
+    state.suggestionIndex = index;
+  }
+
+  // Select a suggestion
+  function selectSuggestion(cmd) {
+    terminalInput.value = cmd;
+    handleInput();
+    hideSuggestions();
+    terminalInput.focus();
+  }
+
+  // Get currently selected suggestion
+  function getSelectedSuggestion() {
+    const selected = suggestionsDropdown.querySelector('.suggestion-item.selected');
+    return selected ? selected.dataset.cmd : null;
   }
 
   // Handle keyboard events
   function handleKeyDown(e) {
+    // Handle suggestions navigation
+    if (state.showingSuggestions) {
+      switch(e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          navigateSuggestions(-1);
+          return;
+        case 'ArrowDown':
+          e.preventDefault();
+          navigateSuggestions(1);
+          return;
+        case 'Enter':
+          e.preventDefault();
+          const selected = getSelectedSuggestion();
+          if (selected) {
+            selectSuggestion(selected);
+            executeCommand(selected);
+          }
+          return;
+        case 'Tab':
+          e.preventDefault();
+          const tabSelected = getSelectedSuggestion();
+          if (tabSelected) {
+            selectSuggestion(tabSelected);
+          }
+          return;
+        case 'Escape':
+          e.preventDefault();
+          hideSuggestions();
+          return;
+      }
+    }
+
     switch(e.key) {
       case 'Enter':
         e.preventDefault();
         const cmd = terminalInput.value.trim();
         if (cmd) {
+          hideSuggestions();
           executeCommand(cmd);
         } else {
           // Empty enter creates new prompt line
@@ -129,7 +299,8 @@
 
       case 'Tab':
         e.preventDefault();
-        autocomplete();
+        // Show all suggestions if input is empty, otherwise filter
+        showSuggestions(terminalInput.value.trim());
         break;
 
       case 'c':
@@ -145,6 +316,14 @@
           e.preventDefault();
           clearTerminal();
           showWelcome();
+        }
+        break;
+
+      case 'Escape':
+        hideSuggestions();
+        // Also skip about animation if it's running
+        if (narratorState.isTyping) {
+          skipNarration();
         }
         break;
     }
@@ -167,22 +346,6 @@
 
     terminalInput.value = state.history[state.historyIndex];
     handleInput();
-  }
-
-  // Autocomplete commands
-  function autocomplete() {
-    const input = terminalInput.value.toLowerCase();
-    if (!input) return;
-
-    const commands = ['help', 'about', 'resume', 'linkedin', 'github',
-                      'contact', 'photos', 'strava', 'skills', 'clear',
-                      'whoami', 'email'];
-
-    const match = commands.find(cmd => cmd.startsWith(input));
-    if (match) {
-      terminalInput.value = match;
-      handleInput();
-    }
   }
 
   // Execute a command
@@ -285,7 +448,7 @@
     { text: "Throughout his career, Arman has championed automation as the foundation of operational excellence. He's modernized legacy systems, delivered global applications, and eliminated inefficiencies that held organizations back. The result? Millions saved annually, faster time-to-market, and technology investments that actually align with business goals." },
     { text: "Leading multinational projects across diverse teams and cultures, he's built a reputation for turning complexity into clarity—and ideas into real business value. Colleagues know him for his persistence, his teamwork, and his ability to bridge the gap between what's technically possible and what the business actually needs." },
     { text: "Today, Arman helps companies scale smarter and build for the future. His philosophy is simple: design for clarity, build for scale, and deliver measurable impact—without unnecessary complexity." },
-    { text: "\"Every element is a crack waiting for scale to find it. Wisdom builds foundations that hold; impatience stacks floors that fall.\"", isQuote: true },
+    { text: "\"Simplicity is the ultimate scalability. Build the foundation right, keep the design lean, and remember—a flawless plan that never ships loses to a good one that does.\"", isQuote: true },
     { text: "Outside of work, he's part runner, part outdoor enthusiast, and always a technology geek. You'll find him chasing trails, going off-grid to reconnect with nature, or diving deep into the latest tech breakthroughs. Curious by default. Happiest when solving real problems—whether that's optimizing a system or finding the best route up a mountain." }
   ];
 
@@ -296,7 +459,7 @@
     isSpeaking: false,
     currentParagraph: 0,
     currentChar: 0,
-    typingSpeed: 20,
+    typingSpeed: 13,
     audio: null
   };
 
@@ -324,7 +487,7 @@
       isSpeaking: false,
       currentParagraph: 0,
       currentChar: 0,
-      typingSpeed: 20,
+      typingSpeed: 13,
       audio: new Audio(data.baseUrl + '/assets/download/About_Me.mp3')
     };
 
@@ -608,7 +771,7 @@ Type 'email' to send me a message directly.
     const welcome = `<pre class="ascii-art">${getColorfulLogo()}</pre><div class="welcome-box"><div class="welcome-title">Welcome to Arman Keyoumarsi's Hub</div>
 <div class="welcome-bio">Enterprise Architect with 20+ years designing and managing systems for top-tier organizations. Skilled in hybrid cloud design, architecture, and project management. Certified in TOGAF, AI, DevOps, and cloud architecture (Azure, AWS, GCP). Passionate about delivering innovative, client-focused solutions. When I'm not building IT systems, I'm exploring trails, enjoying the outdoors, and always up for a good conversation over some craft beer.</div>
 <div class="quick-links"><div class="links-title">Quick Links:</div><div class="links-grid"><div class="link-item"><span class="link-num">[1]</span> <a href="#" onclick="runCmd('about');return false;">About</a></div><div class="link-item"><span class="link-num">[2]</span> <a href="#" onclick="runCmd('resume');return false;">Resume</a></div><div class="link-item"><span class="link-num">[3]</span> <a href="#" onclick="runCmd('linkedin');return false;">LinkedIn</a></div><div class="link-item"><span class="link-num">[4]</span> <a href="#" onclick="runCmd('github');return false;">GitHub</a></div><div class="link-item"><span class="link-num">[5]</span> <a href="#" onclick="runCmd('contact');return false;">Contact</a></div><div class="link-item"><span class="link-num">[6]</span> <a href="#" onclick="runCmd('photos');return false;">Photos</a></div><div class="link-item"><span class="link-num">[7]</span> <a href="#" onclick="runCmd('strava');return false;">Strava</a></div></div></div>
-<div class="help-hint">Type 'help' for all commands</div></div>`;
+<div class="help-hint">Press Tab for suggestions • Type 'help' for all commands</div></div>`;
 
     printOutput(welcome);
   }

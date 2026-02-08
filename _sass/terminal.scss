@@ -1,12 +1,20 @@
 // Full-Screen Linux Terminal Styles
 
-// Terminal Colors
-$terminal-bg: #0d0d0d;
-$terminal-text: #00ff00;
-$terminal-text-dim: #00aa00;
-$terminal-cursor: #00ff00;
-$terminal-header-bg: #1a1a1a;
-$terminal-border: #333;
+// Terminal Colors - Ayu Dark Theme
+$terminal-bg: #0a0e14;
+$terminal-header-bg: #0d1117;
+$terminal-border: #1f2430;
+$terminal-text: #bfbdb6;
+$terminal-text-dim: #6c7380;
+$terminal-cursor: #e6b450;
+
+// Accent colors - Ayu palette
+$terminal-yellow: #e6b450;
+$terminal-cyan: #39bae6;
+$terminal-green: #7fd962;
+$terminal-red: #f07178;
+$terminal-magenta: #d2a6ff;
+$terminal-orange: #ff8f40;
 
 // Reset and base
 html, body {
@@ -14,6 +22,64 @@ html, body {
   padding: 0;
   height: 100%;
   overflow: hidden;
+}
+
+// Terminal wrapper (fills viewport)
+.terminal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $terminal-bg;
+  display: flex;
+  flex-direction: column;
+}
+
+// Terminal container
+.terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: $terminal-bg;
+  font-family: 'Inconsolata', 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  color: $terminal-text;
+  overflow: hidden;
+}
+
+// Fallback navigation
+.terminal-nav-fallback {
+  background: $terminal-header-bg;
+  border-top: 1px solid $terminal-border;
+  padding: 12px 20px;
+  text-align: center;
+  flex-shrink: 0;
+
+  .nav-hint {
+    color: $terminal-text-dim;
+    font-size: 12px;
+    margin: 0 0 8px 0;
+  }
+
+  .btn {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid $terminal-border;
+    color: $terminal-text;
+    padding: 6px 16px;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(57, 186, 230, 0.15);
+      border-color: $terminal-cyan;
+      color: $terminal-cyan;
+    }
+  }
 }
 
 // Full screen terminal
@@ -39,19 +105,45 @@ html, body {
   padding: 8px 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   user-select: none;
   flex-shrink: 0;
 
+  .terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+
+    span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .btn-close {
+      background: $terminal-red;
+    }
+
+    .btn-minimize {
+      background: $terminal-yellow;
+    }
+
+    .btn-maximize {
+      background: $terminal-green;
+    }
+  }
+
   .terminal-title {
-    color: #ccc;
+    color: $terminal-text-dim;
     font-size: 13px;
+    flex: 1;
+    text-align: center;
   }
 
   .terminal-controls {
     display: flex;
     gap: 12px;
-    color: #666;
+    color: $terminal-text-dim;
     font-size: 14px;
 
     span {
@@ -59,7 +151,7 @@ html, body {
       padding: 2px 6px;
 
       &:hover {
-        color: #999;
+        color: $terminal-text;
       }
     }
   }
@@ -80,7 +172,7 @@ html, body {
     background: $terminal-bg;
   }
   &::-webkit-scrollbar-thumb {
-    background: #333;
+    background: $terminal-border;
     border-radius: 4px;
   }
 }
@@ -93,7 +185,7 @@ html, body {
 
 // Prompt line styling
 .prompt {
-  color: $terminal-text;
+  color: $terminal-yellow;
   user-select: none;
 }
 
@@ -111,31 +203,40 @@ html, body {
   white-space: pre;
 }
 
-// Subtle ASCII art colors (green gradient)
-.ascii-line-1 { color: #5fff5f; }
-.ascii-line-2 { color: #4de64d; }
-.ascii-line-3 { color: #3bcc3b; }
-.ascii-line-4 { color: #2eb32e; }
-.ascii-line-5 { color: #229922; }
-.ascii-line-6 { color: #4dccb3; }
-.ascii-line-7 { color: #40b39f; }
-.ascii-line-8 { color: #339985; }
-.ascii-line-9 { color: #268070; }
-.ascii-line-10 { color: #1a665a; }
+// ASCII art with continuous color wave animation
+@keyframes colorWave {
+  0% { color: #7fd962; }
+  20% { color: #aad94c; }
+  40% { color: #e6b450; }
+  60% { color: #ff8f40; }
+  80% { color: #39bae6; }
+  100% { color: #7fd962; }
+}
+
+.ascii-line-1 { animation: colorWave 4s ease-in-out infinite; animation-delay: 0s; }
+.ascii-line-2 { animation: colorWave 4s ease-in-out infinite; animation-delay: 0.2s; }
+.ascii-line-3 { animation: colorWave 4s ease-in-out infinite; animation-delay: 0.4s; }
+.ascii-line-4 { animation: colorWave 4s ease-in-out infinite; animation-delay: 0.6s; }
+.ascii-line-5 { animation: colorWave 4s ease-in-out infinite; animation-delay: 0.8s; }
+.ascii-line-6 { animation: colorWave 4s ease-in-out infinite; animation-delay: 1.0s; }
+.ascii-line-7 { animation: colorWave 4s ease-in-out infinite; animation-delay: 1.2s; }
+.ascii-line-8 { animation: colorWave 4s ease-in-out infinite; animation-delay: 1.4s; }
+.ascii-line-9 { animation: colorWave 4s ease-in-out infinite; animation-delay: 1.6s; }
+.ascii-line-10 { animation: colorWave 4s ease-in-out infinite; animation-delay: 1.8s; }
 
 // Welcome box
 .welcome-box {
-  border: 1px solid #333;
-  border-left: 3px solid #444;
+  border: 1px solid $terminal-border;
+  border-left: 3px solid $terminal-cyan;
   padding: 10px 15px;
   margin: 10px 0;
   width: fit-content;
   max-width: 800px;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(31, 36, 48, 0.5);
 
   .welcome-title {
-    color: $terminal-text;
+    color: $terminal-yellow;
     margin: 0 0 2px 0;
     padding: 0;
   }
@@ -163,11 +264,11 @@ html, body {
     }
 
     .bio-quote {
-      border-left: 2px solid #4dccb3;
+      border-left: 2px solid $terminal-cyan;
       padding-left: 15px;
       margin: 15px 0;
       font-style: italic;
-      color: #4dccb3;
+      color: $terminal-cyan;
     }
   }
 
@@ -176,7 +277,7 @@ html, body {
     padding: 0;
 
     .links-title {
-      color: $terminal-text;
+      color: $terminal-yellow;
       margin: 0 0 2px 0;
       padding: 0;
     }
@@ -192,16 +293,16 @@ html, body {
       white-space: nowrap;
 
       .link-num {
-        color: #888;
+        color: $terminal-text-dim;
       }
 
       a {
-        color: $terminal-text;
+        color: $terminal-cyan;
         text-decoration: underline;
         cursor: pointer;
 
         &:hover {
-          color: #7fff7f;
+          color: $terminal-green;
         }
       }
     }
@@ -221,7 +322,7 @@ html, body {
   padding-left: 2px;
 
   .info-title {
-    color: #ffff00;
+    color: $terminal-yellow;
     margin-bottom: 10px;
   }
 
@@ -230,11 +331,11 @@ html, body {
   }
 
   a {
-    color: $terminal-text;
+    color: $terminal-cyan;
     text-decoration: underline;
 
     &:hover {
-      color: #7fff7f;
+      color: $terminal-green;
     }
   }
 }
@@ -264,12 +365,126 @@ html, body {
   max-width: 70%;
 }
 
+// Command hint chips
+.command-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid $terminal-border;
+
+  .hint-chip {
+    background: rgba(57, 186, 230, 0.1);
+    border: 1px solid $terminal-border;
+    color: $terminal-cyan;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(57, 186, 230, 0.25);
+      border-color: $terminal-cyan;
+    }
+  }
+}
+
+// Suggestions dropdown
+.suggestions-dropdown {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  min-width: 320px;
+  max-width: 450px;
+  max-height: 350px;
+  overflow-y: auto;
+  background: $terminal-header-bg;
+  border: 1px solid $terminal-border;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+
+  .suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover,
+    &.selected {
+      background: rgba(57, 186, 230, 0.15);
+    }
+
+    &.selected {
+      border-left: 3px solid $terminal-cyan;
+      padding-left: 11px;
+    }
+
+    .suggestion-icon {
+      font-size: 16px;
+      margin-right: 12px;
+      opacity: 0.9;
+    }
+
+    .suggestion-cmd {
+      color: $terminal-green;
+      font-weight: 600;
+      min-width: 80px;
+      font-family: inherit;
+    }
+
+    .suggestion-desc {
+      color: $terminal-text-dim;
+      font-size: 13px;
+      margin-left: auto;
+      padding-left: 15px;
+    }
+  }
+
+  // Scrollbar styling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $terminal-border;
+    border-radius: 3px;
+  }
+}
+
+// Mobile adjustments for suggestions
+@media (max-width: 480px) {
+  .suggestions-dropdown {
+    min-width: 280px;
+    max-width: calc(100vw - 40px);
+
+    .suggestion-item {
+      padding: 12px 10px;
+
+      .suggestion-desc {
+        display: none;
+      }
+    }
+  }
+}
+
 // Blinking cursor
 .cursor {
   display: inline-block;
   width: 8px;
   height: 1em;
-  background: $terminal-text;
+  background: $terminal-cursor;
   animation: blink 1s step-end infinite;
   vertical-align: text-bottom;
   margin-left: 0;
@@ -282,11 +497,11 @@ html, body {
 
 // Error and success messages
 .error {
-  color: #ff6b6b;
+  color: $terminal-red;
 }
 
 .success {
-  color: $terminal-text;
+  color: $terminal-green;
 }
 
 .dim {
@@ -294,16 +509,16 @@ html, body {
 }
 
 .highlight {
-  color: #ffff00;
+  color: $terminal-yellow;
 }
 
 // Links in terminal
 a {
-  color: $terminal-text;
+  color: $terminal-cyan;
   text-decoration: underline;
 
   &:hover {
-    color: #7fff7f;
+    color: $terminal-green;
   }
 }
 
@@ -315,7 +530,7 @@ a {
   margin: 10px 0;
 
   .cmd {
-    color: #ffff00;
+    color: $terminal-yellow;
   }
 
   .desc {
@@ -340,7 +555,7 @@ a {
   margin: 10px 0;
 
   .skill-category {
-    color: #ffff00;
+    color: $terminal-yellow;
     margin-top: 10px;
     margin-bottom: 5px;
   }
@@ -356,7 +571,7 @@ a {
   margin: 10px 0 20px 0;
 
   .about-header {
-    color: #ffff00;
+    color: $terminal-yellow;
     margin-bottom: 15px;
   }
 
@@ -368,7 +583,7 @@ a {
 
     button {
       background: transparent;
-      border: 1px solid #444;
+      border: 1px solid $terminal-border;
       color: $terminal-text;
       padding: 6px 14px;
       font-family: inherit;
@@ -377,13 +592,13 @@ a {
       transition: all 0.2s;
 
       &:hover {
-        background: rgba(0, 255, 0, 0.1);
-        border-color: $terminal-text;
+        background: rgba(57, 186, 230, 0.15);
+        border-color: $terminal-cyan;
       }
 
       &.active {
-        background: rgba(0, 255, 0, 0.2);
-        border-color: $terminal-text;
+        background: rgba(57, 186, 230, 0.25);
+        border-color: $terminal-cyan;
       }
 
       &:disabled {
